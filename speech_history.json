@@ -1,0 +1,86 @@
+[
+  {
+    "timestamp": "2026-05-21T17:29:26.180862",
+    "text": "السلام علیکم میں آپ کا ای آئی اسسٹنٹ ہوں",
+    "voice": "ur-PK-UzmaNeural",
+    "engine": "edge_tts",
+    "success": true
+  },
+  {
+    "timestamp": "2026-05-21T17:29:30.543304",
+    "text": "یہ مردانہ آواز ہے",
+    "voice": "ur-PK-AsadNeural",
+    "engine": "edge_tts",
+    "success": true
+  },
+  {
+    "timestamp": "2026-05-21T17:29:37.009580",
+    "text": "Hello. I am your advanced AI assistant.",
+    "voice": "en-US-AriaNeural",
+    "engine": "edge_tts",
+    "success": true
+  },
+  {
+    "timestamp": "2026-05-21T17:29:43.724524",
+    "text": "یہ ایک بہت لمبا ٹیکسٹ ہے جسے سسٹم مختلف حصوں میں تقسیم کرے گا پھر ہر حصے کو الگ الگ آواز میں تبدیل کرے گا اس طرح بڑے ریسپانس بھی آسانی سے سنائے جا سکتے ہیں",
+    "voice": "en-US-AriaNeural",
+    "engine": "edge_tts",
+    "success": true
+  },
+  {
+    "timestamp": "2026-05-21T17:29:50.643978",
+    "text": "یہ سلو اور ہائی پچ آواز ہے",
+    "voice": "en-US-AriaNeural",
+    "engine": "edge_tts",
+    "success": true
+  },
+  {
+    "timestamp": "2026-05-21T17:38:18.240757",
+    "text": "AIResponse(response_typeResponseType. ACTION: action, contenttype: action, intent: open_file, parameters: file_name: لیکھ, confidence: 0. 95, reasoning: آپ نے لیکھ کہنے کے بعد، میں نے اندازہ لگایا کہ آپ کو ایک فائل کھولنا ہے, raw_responsen type: action, n intent: open_file, n parameters: n file_name: لیکھn , n confidence: 0. 95, n reasoning: آپ نے لیکھ کہنے کے بعد، میں نے اندازہ لگایا کہ آپ کو ایک فائل کھولنا ہےn, timestampdatetime. datetime(2026, 5, 21, 17, 37, 13, 126165), processing_time1. 9087674617767334, model_usedllama-3. 1-8b-instant, tokens_usedprompt: 487, completion: 102, total: 589, confidence1. 0)",
+    "voice": "ur-PK-UzmaNeural",
+    "engine": "edge_tts",
+    "success": true
+  },
+  {
+    "timestamp": "2026-05-21T18:06:01.504205",
+    "text": "میں اچھا ہوں، آپ کس کے ساتھ بات کر رہے ہیں؟",
+    "voice": "ur-PK-UzmaNeural",
+    "engine": "edge_tts",
+    "success": true
+  },
+  {
+    "timestamp": "2026-05-21T18:06:20.637463",
+    "text": "ہاہا، اچھا ہے! آپ کے ساتھ بات کرنا pleasure ہے کیا آپ کچھ باتیں چاہتے ہیں یا آپ صرف چیٹ کرنا چاہتے ہیں؟",
+    "voice": "ur-PK-UzmaNeural",
+    "engine": "edge_tts",
+    "success": true
+  },
+  {
+    "timestamp": "2026-05-21T18:06:35.529724",
+    "text": "کیا آپ قرنٹ وزیری ازم کے بارے میں جانتے ہیں؟",
+    "voice": "ur-PK-UzmaNeural",
+    "engine": "edge_tts",
+    "success": true
+  },
+  {
+    "timestamp": "2026-05-21T18:06:59.461235",
+    "text": "Main aapka command execute kar raha hoon",
+    "voice": "ur-PK-UzmaNeural",
+    "engine": "edge_tts",
+    "success": true
+  },
+  {
+    "timestamp": "2026-05-21T18:07:23.581268",
+    "text": "Main aapka command execute kar raha hoon",
+    "voice": "ur-PK-UzmaNeural",
+    "engine": "edge_tts",
+    "success": true
+  },
+  {
+    "timestamp": "2026-05-21T18:07:43.263735",
+    "text": "Main aapka command execute kar raha hoon",
+    "voice": "ur-PK-UzmaNeural",
+    "engine": "edge_tts",
+    "success": true
+  }
+]

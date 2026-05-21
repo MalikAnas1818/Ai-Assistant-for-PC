@@ -1,0 +1,45 @@
+# =========================
+# AI Desktop Assistant
+# Requirements.txt
+# =========================
+pip install SpeechRecognition openai-whisper faster-whisper pyaudio numpy
+# AI + LLM
+groq
+langchain
+langchain-groq
+
+# Voice Recognition
+SpeechRecognition
+pyaudio
+openai-whisper
+
+# Text To Speech
+pyttsx3
+pip install pygame
+# Automation
+pyautogui
+keyboard
+mouse
+pywhatkit
+
+# GUI
+streamlit
+
+# Utilities
+python-dotenv
+requests
+numpy
+pillow
+
+# Optional (Better Performance)
+torch
+torchaudio
+torchvision
+
+# File Handling
+python-docx
+PyPDF2
+
+# Browser Automation
+selenium
+webdriver-manager

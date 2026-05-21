@@ -1,0 +1,70 @@
+{
+  "metadata": {
+    "start_time": "2026-05-20T14:02:52.372549",
+    "end_time": "2026-05-20T14:03:14.879042",
+    "total_messages": 12,
+    "model": "llama-3.1-8b-instant"
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "youtube pe python tutorial search karo",
+      "timestamp": "2026-05-20T14:02:53.378536"
+    },
+    {
+      "role": "assistant",
+      "content": "{\n  \"type\": \"action\",\n  \"intent\": \"youtube_search\",\n  \"parameters\": {\n    \"query\": \"python tutorial\"\n  },\n  \"confidence\": 0.95,\n  \"reasoning\": \"User asked to search for python tutorial on YouTube\"\n}",
+      "timestamp": "2026-05-20T14:02:53.378536"
+    },
+    {
+      "role": "user",
+      "content": "chrome open karo",
+      "timestamp": "2026-05-20T14:02:54.058988"
+    },
+    {
+      "role": "assistant",
+      "content": "{\n  \"type\": \"action\",\n  \"intent\": \"open_chrome\",\n  \"parameters\": {},\n  \"confidence\": 0.95,\n  \"reasoning\": \"User asked to open Google Chrome\"\n}",
+      "timestamp": "2026-05-20T14:02:54.058988"
+    },
+    {
+      "role": "user",
+      "content": "mera computer shutdown kar do",
+      "timestamp": "2026-05-20T14:02:54.749149"
+    },
+    {
+      "role": "assistant",
+      "content": "{\n  \"type\": \"action\",\n  \"intent\": \"shutdown_pc\",\n  \"parameters\": {},\n  \"confidence\": 0.95,\n  \"reasoning\": \"User asked to shut down their computer\"\n}",
+      "timestamp": "2026-05-20T14:02:54.749149"
+    },
+    {
+      "role": "user",
+      "content": "hello kya haal hai?",
+      "timestamp": "2026-05-20T14:02:55.599121"
+    },
+    {
+      "role": "assistant",
+      "content": "{\n  \"type\": \"chat\",\n  \"reply\": \"Main theek hoon, aur aap? Kya chahiye?\",\n  \"tone\": \"friendly\",\n  \"reasoning\": \"User asked about my well-being, responding with a friendly greeting\"\n}",
+      "timestamp": "2026-05-20T14:02:55.599121"
+    },
+    {
+      "role": "user",
+      "content": "weather kaisa hai Lahore mein?",
+      "timestamp": "2026-05-20T14:03:13.624530"
+    },
+    {
+      "role": "assistant",
+      "content": "{\n  \"type\": \"action\",\n  \"intent\": \"get_weather\",\n  \"parameters\": {\n    \"location\": \"Lahore\"\n  },\n  \"confidence\": 0.85,\n  \"reasoning\": \"User asked about the weather in Lahore, trying to fetch current weather information\"\n}",
+      "timestamp": "2026-05-20T14:03:13.624530"
+    },
+    {
+      "role": "user",
+      "content": "music play kar",
+      "timestamp": "2026-05-20T14:03:14.376000"
+    },
+    {
+      "role": "assistant",
+      "content": "{\n  \"type\": \"action\",\n  \"intent\": \"play_music\",\n  \"parameters\": {},\n  \"confidence\": 0.95,\n  \"reasoning\": \"User asked to play music, assuming default music player\"\n}",
+      "timestamp": "2026-05-20T14:03:14.376000"
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+[
+  {
+    "intent": "open_youtube",
+    "confidence": "0.95",
+    "command": "youtube kholo",
+    "parameters": {},
+    "timestamp": "14:00:25"
+  },
+  {
+    "intent": "youtube_search",
+    "confidence": "0.80",
+    "command": "youtube pe python tutorial search karo",
+    "parameters": {
+      "query": "python tutorial search karo"
+    },
+    "timestamp": "14:00:25"
+  },
+  {
+    "intent": "open_chrome",
+    "confidence": "0.95",
+    "command": "open chrome",
+    "parameters": {},
+    "timestamp": "14:00:25"
+  },
+  {
+    "intent": "google_search",
+    "confidence": "0.80",
+    "command": "google search karo machine learning ke bare mein",
+    "parameters": {
+      "query": "karo machine learning ke bare mein"
+    },
+    "timestamp": "14:00:26"
+  },
+  {
+    "intent": "create_folder",
+    "confidence": "0.80",
+    "command": "folder banao project files",
+    "parameters": {
+      "folder_name": "project files"
+    },
+    "timestamp": "14:00:26"
+  },
+  {
+    "intent": "take_screenshot",
+    "confidence": "1.00",
+    "command": "screenshot lo",
+    "parameters": {},
+    "timestamp": "14:00:26"
+  },
+  {
+    "intent": "shutdown_pc",
+    "confidence": "1.00",
+    "command": "pc band karo",
+    "parameters": {},
+    "timestamp": "14:00:27"
+  },
+  {
+    "intent": "get_time",
+    "confidence": "1.00",
+    "command": "time kya hua hai",
+    "parameters": {},
+    "timestamp": "14:00:27"
+  },
+  {
+    "intent": "play_music",
+    "confidence": "0.80",
+    "command": "music chalao",
+    "parameters": {
+      "query": ""
+    },
+    "timestamp": "14:00:27"
+  },
+  {
+    "intent": "unknown",
+    "confidence": "0.00",
+    "command": "unknown command",
+    "parameters": {},
+    "timestamp": "14:00:28"
+  },
+  {
+    "intent": "send_whatsapp_message",
+    "confidence": "0.80",
+    "command": "whatsapp message bhejo hello",
+    "parameters": {
+      "message": "bhejo hello"
+    },
+    "timestamp": "14:00:28"
+  }
+]

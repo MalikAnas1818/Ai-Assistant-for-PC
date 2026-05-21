@@ -1,0 +1,32 @@
+[
+  {
+    "url": "https://youtube.com",
+    "title": "YouTube",
+    "timestamp": "14:18:36",
+    "duration": "0.00s"
+  },
+  {
+    "url": "https://google.com",
+    "title": "Google",
+    "timestamp": "14:18:47",
+    "duration": "0.00s"
+  },
+  {
+    "url": "https://www.youtube.com/results?search_query=python%20programming",
+    "title": "python programming - YouTube",
+    "timestamp": "14:19:01",
+    "duration": "0.00s"
+  },
+  {
+    "url": "https://www.youtube.com/results?search_query=web%20development",
+    "title": "web development - YouTube",
+    "timestamp": "14:19:12",
+    "duration": "0.00s"
+  },
+  {
+    "url": "https://www.youtube.com/results?search_query=AI%20tutorial",
+    "title": "AI tutorial - YouTube",
+    "timestamp": "14:19:23",
+    "duration": "0.00s"
+  }
+]

@@ -1,0 +1,70 @@
+# ============================================================
+# Ai Assistant — .gitignore
+# ============================================================
+
+# --- Virtual Environment ---
+env/
+venv/
+.venv/
+fypenv/
+anas/
+ENV/
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+*.egg
+.eggs/
+
+# --- dlib / Model Files (large binaries — download manually) ---
+*.dat
+*.dat.bz2
+*.whl
+
+# --- Student Data & Attendance Records ---
+data/
+students/
+embeddings/
+attendance/
+*.csv
+*.xlsx
+
+# --- Camera / Captured Images ---
+captures/
+temp_images/
+*.jpg
+*.jpeg
+*.png
+*.bmp
+
+# --- Email / WhatsApp Credentials ---
+credentials.json
+secrets.json
+*.env
+.env
+config_local.py
+
+# --- Logs ---
+logs/
+*.log
+
+# --- IDE & Editor ---
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# --- OS Files ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Pytest / Coverage ---
+.pytest_cache/
+.coverage
+htmlcov/
