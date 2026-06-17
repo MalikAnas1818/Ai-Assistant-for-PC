@@ -878,6 +878,8 @@ class AdvancedFileManager:
         except Exception as e:
             logger.error(f"❌ Backup error: {e}")
             return None
+        
+    
 
     # =========================
     # UTILITIES

@@ -411,5 +411,47 @@
     "text": "Goodbye!",
     "voice": "en-US-AriaNeural",
     "success": true
+  },
+  {
+    "timestamp": "2026-06-17T22:00:49.643350",
+    "text": "Hello! Im your AI assistant. How can I help you?",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-17T22:01:14.800057",
+    "text": "Im not sure how to handle that.",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-17T22:01:49.167980",
+    "text": "Creating folder project.",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-17T22:02:09.492423",
+    "text": "Im not sure how to handle that.",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-17T22:02:38.560240",
+    "text": "Koi steps nahi mile plan mein.",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-17T22:03:05.481425",
+    "text": "Koi steps nahi mile plan mein.",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-17T22:03:50.176303",
+    "text": "Goodbye!",
+    "voice": "en-US-AriaNeural",
+    "success": true
   }
 ]

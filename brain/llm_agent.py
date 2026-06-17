@@ -138,7 +138,19 @@ RESPONSE FORMATS
   "conclusion": "final answer",
   "confidence": 0.85
 }
+EXAMPLES of correct JSON output:
 
+User: "Documents folder in report.pdf ko Desktop move in"
+Output: {"type": "action", "intent": "move_file", "parameters": {"source_path": "C:\\Users\\YourName\\Documents\\report.pdf", "destination_path": "C:\\Users\\YourName\\Desktop\\report.pdf"}}
+
+User: "Start the song Shape of You by Ed Sheeran"
+Output: {"type": "action", "intent": "youtube_search", "parameters": {"query": "Arijit Singh Tum Hi Ho"}}
+
+User: "What are the files in my Downloads folder?"
+Output: {"type": "action", "intent": "list_files", "parameters": {"folder_path": "C:\\Users\\YourName\\Downloads"}}
+
+User: "Create a new folder named Projects in my Documents"
+Output: {"type": "action", "intent": "create_folder", "parameters": {"folder_name": "Projects"}}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 RULES
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

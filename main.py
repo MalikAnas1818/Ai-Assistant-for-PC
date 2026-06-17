@@ -12,6 +12,7 @@ from voice.speech_to_text import SpeechRecognizer
 from voice.text_to_speech import TextToSpeech, VoiceConfig, Voice
 from brain.intent_classifier import IntentClassifier
 from brain.llm_agent import LLMAgent, Model
+from brain.agent import Agent
 from brain.response_formatter import get_speech_text
 from actions.browser import AdvancedBrowserManager, SearchEngine
 from actions.folder import AdvancedFileManager
@@ -79,6 +80,9 @@ class ActionExecutor:
             "create_folder":   self._create_folder,
             "delete_file":     self._delete_file,
             "open_file":       self._open_file,
+            "move_file":       self._move_file,
+            "copy_file":       self._copy_file,
+            "list_files":       self._list_files,
             # System
             "take_screenshot": self._take_screenshot,
             "shutdown_pc":     self._shutdown,
@@ -143,6 +147,28 @@ class ActionExecutor:
         except Exception as e:
             logger.error(f"open_file error: {e}")
             return False
+        
+    def _move_file(self, params: dict) -> bool:
+        source = params.get("source_path", "")
+        dest   = params.get("destination_path", "")
+        if not source or not dest:
+            logger.warning("move_file: source ya destination missing hai")
+            return False
+        return self.files.move_file(source, dest)
+    
+    def _copy_file(self, params: dict) -> bool:
+        source = params.get("source_path", "")
+        dest   = params.get("destination_path", "")
+        if not source or not dest:
+            logger.warning("copy_file: source ya destination missing hai")
+            return False
+        return self.files.copy_file(source, dest)
+    
+    def _list_files(self, params: dict) -> bool:
+        folder = params.get("folder_path", "C:\\")
+        items  = self.files.list_files(folder)
+        logger.info(f"Found {len(items)} items")
+        return True
 
     # ── System ────────────────────────────────────────────────
 
@@ -252,39 +278,35 @@ class AIAssistant:
 
     def __init__(self):
         logger.info("Initializing AI Assistant...")
-
+        
+        
         self.stt      = SpeechRecognizer(whisper_model="base")
         self.tts      = TextToSpeech(VoiceConfig(voice=Voice.FEMALE.value))
         self.llm      = LLMAgent(model=Model.LLAMA_8B, temperature=0.3)
         self.executor = ActionExecutor()
+        self.agent    = Agent(self.llm, self.executor)
 
         logger.info("AI Assistant ready!")
 
     # ── Single Turn ───────────────────────────────────────────
 
     def process(self, user_input: str) -> str:
-        """
-        Run one full pipeline cycle.
-        Returns the assistant's speech text.
-        """
         logger.info(f"User: {user_input}")
-
-        # Step 1 — LLM decision
+        
+        if self.agent.is_multi_step(user_input):
+            result = self.agent.run(user_input)
+            return result
+        
         ai_response = self.llm.ask(user_input)
-        content     = ai_response.content
-
-        # Step 2 — Execute action if needed
+        content = ai_response.content
         if content.get("type") == "action":
             intent = content.get("intent", "unknown")
             params = content.get("parameters", {})
             if intent != "unknown":
-                logger.info(f"Executing: {intent} | params: {params}")
                 self.executor.execute(intent, params)
-
-        # Step 3 — Format for TTS
-        speech_text = get_speech_text(ai_response)
-        logger.info(f"Response: {speech_text}")
-        return speech_text
+                
+        from brain.response_formatter import get_speech_text
+        return get_speech_text(ai_response)
 
     # ── Voice Loop ────────────────────────────────────────────
 
