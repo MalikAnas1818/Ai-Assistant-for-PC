@@ -8,6 +8,7 @@ AI_Assistant/
 ├── brain/
 │   ├── intent_classifier.py
 │   ├── llm_agent.py
+    ├──response_formatter.py
 │
 ├── actions/
 │   ├── whatsapp.py

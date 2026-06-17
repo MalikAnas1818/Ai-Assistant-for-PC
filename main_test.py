@@ -1,205 +1,157 @@
-"""
-╔══════════════════════════════════════════════════════╗
-║            CLEAN AI ASSISTANT PIPELINE              ║
-║      STT → INTENT → LLM → FORMAT → TTS             ║
-╚══════════════════════════════════════════════════════╝
-"""
+# main.py
+# AI Assistant — Main Pipeline
+#
+# Pipeline:
+#   Microphone → speech_to_text → intent_classifier → llm_agent
+#               → response_formatter → text_to_speech → Speaker
 
-import time
 import logging
+import sys
 
-from voice.speech_to_text import listen_command
-from voice.text_to_speech import speak
+from voice.speech_to_text import SpeechRecognizer
+from voice.text_to_speech import TextToSpeech, VoiceConfig, Voice
+from brain.intent_classifier import IntentClassifier
+from brain.llm_agent import LLMAgent, Model
+from brain.response_formatter import get_speech_text
 
-from brain.intent_classifier import AdvancedIntentClassifier
-from brain.llm_agent import AdvancedLLMAgent, ModelType
-
-from brain.response_formatter import get_ai_speech_text
-
-
-# =========================
+# ══════════════════════════════════════════════════════════════
 # LOGGING
-# =========================
-logging.basicConfig(level=logging.INFO)
+# ══════════════════════════════════════════════════════════════
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s | %(levelname)-8s | %(message)s',
+    datefmt='%H:%M:%S'
+)
 logger = logging.getLogger(__name__)
 
 
-# =========================
-# AI ASSISTANT CLASS
-# =========================
+# ══════════════════════════════════════════════════════════════
+# ASSISTANT
+# ══════════════════════════════════════════════════════════════
+
 class AIAssistant:
+    """
+    Full pipeline:
+    Voice In → Intent Check → LLM Brain → Voice Out
+    """
+
+    STOP_PHRASES = {"stop", "exit", "quit", "goodbye", "bye"}
 
     def __init__(self):
+        logger.info("Initializing AI Assistant...")
 
-        print("\n🤖 Initializing AI Assistant...\n")
+        self.stt        = SpeechRecognizer(whisper_model="base")
+        self.tts        = TextToSpeech(VoiceConfig(voice=Voice.FEMALE.value))
+        self.classifier = IntentClassifier()
+        self.llm        = LLMAgent(model=Model.LLAMA_8B, temperature=0.3)
 
-        self.intent_classifier = AdvancedIntentClassifier()
+        logger.info("AI Assistant ready!")
 
-        self.llm = AdvancedLLMAgent(
-            model=ModelType.LLAMA_3_1_8B
-        )
+    # ── Single Turn ───────────────────────────────────────────
 
-        self.running = True
+    def process(self, user_input: str) -> str:
+        """
+        Run one full pipeline cycle on a text input.
+        Returns the assistant's speech text.
+        """
+        logger.info(f"User: {user_input}")
 
-        print("✅ Assistant Ready!\n")
+        # Step 1 — Quick local intent check (no API call needed for simple actions)
+        local = self.classifier.classify(user_input)
+        logger.info(f"Local intent: {local.intent.value} ({local.confidence:.2f})")
 
+        # Step 2 — Send to LLM for final decision + response
+        ai_response = self.llm.ask(user_input)
 
-    # =========================
-    # PROCESS USER INPUT
-    # =========================
-    def process(self, text: str):
+        # Step 3 — Format into speakable text
+        speech_text = get_speech_text(ai_response)
+        logger.info(f"Response: {speech_text}")
 
-        print(f"\n🧑 User: {text}")
+        return speech_text
 
-        # 1. INTENT CLASSIFICATION
-        intent_result = self.intent_classifier.classify(text)
+    # ── Voice Loop ────────────────────────────────────────────
 
-        print(f"🧠 Intent: {intent_result.intent.value}")
-        print(f"📊 Confidence: {intent_result.confidence:.2f}")
+    def listen_and_respond(self):
+        """Listen once, process, speak."""
+        user_input = self.stt.listen()
 
-        # =========================
-        # 2. HIGH CONFIDENCE ACTION
-        # =========================
-        if intent_result.confidence > 0.75 and intent_result.intent.value != "unknown":
+        if not user_input:
+            self.tts.speak("I didn't catch that. Please try again.")
+            return True  # keep running
 
-            reply = self.execute_action(intent_result)
+        print(f"\n  You : {user_input}")
 
-            print(f"⚡ Action: {reply}")
+        # Stop command check
+        if user_input.lower().strip() in self.STOP_PHRASES:
+            self.tts.speak("Goodbye! Have a great day.")
+            return False  # stop loop
 
-            speak(reply)
-            return
+        speech_text = self.process(user_input)
+        self.tts.speak(speech_text)
+        return True  # keep running
 
+    # ── Run ───────────────────────────────────────────────────
 
-        # =========================
-        # 3. LLM FALLBACK
-        # =========================
-        response = self.llm.ask(text)
+    def run(self):
+        """Start the continuous voice loop."""
+        print("\n" + "="*55)
+        print("  AI ASSISTANT")
+        print(f"  Say one of {self.STOP_PHRASES} to exit")
+        print("="*55 + "\n")
 
-        reply = get_ai_speech_text(response)
-
-        print(f"🤖 AI: {reply}")
-
-        speak(reply)
-
-
-    # =========================
-    # EXECUTE ACTIONS
-    # =========================
-    def execute_action(self, intent_result):
-
-        intent = intent_result.intent.value
-        params = intent_result.parameters
-
-        if intent == "open_youtube":
-            return "Main YouTube open kar raha hoon"
-
-        elif intent == "youtube_search":
-            query = params.get("query", "")
-            return f"YouTube pe search kar raha hoon {query}"
-
-        elif intent == "open_chrome":
-            return "Chrome open kar raha hoon"
-
-        elif intent == "google_search":
-            query = params.get("query", "")
-            return f"Google pe search kar raha hoon {query}"
-
-        elif intent == "create_folder":
-            name = params.get("folder_name", "New Folder")
-            return f"Folder bana raha hoon {name}"
-
-        elif intent == "take_screenshot":
-            return "Screenshot le raha hoon"
-
-        elif intent == "get_time":
-            return f"Current time hai {time.strftime('%H:%M:%S')}"
-
-        elif intent == "get_date":
-            return f"Aaj ki date hai {time.strftime('%Y-%m-%d')}"
-
-        elif intent == "play_music":
-            return "Music chala raha hoon"
-
-        elif intent == "pause_music":
-            return "Music pause kar diya"
-
-        elif intent == "stop_music":
-            return "Music stop kar diya"
-
-        elif intent == "send_whatsapp_message":
-            msg = params.get("message", "")
-            return f"WhatsApp message send kar raha hoon: {msg}"
-
-        else:
-            return "Main aapka command execute kar raha hoon"
-
-
-    # =========================
-    # VOICE MODE
-    # =========================
-    def run_voice_mode(self):
-
-        print("\n🎤 Voice Mode Started...\n")
-
-        while self.running:
-
-            try:
-                text = listen_command("urdu")
-
-                if not text:
-                    continue
-
-                if text.lower() in ["exit", "stop", "band karo"]:
-                    speak("Goodbye!")
-                    break
-
-                self.process(text)
-
-            except KeyboardInterrupt:
-                print("\n⛔ Stopping Assistant...")
-                break
-
-            except Exception as e:
-                logger.error(f"Error: {e}")
-                speak("Kuch error ho gaya hai")
-
-
-    # =========================
-    # TEXT MODE
-    # =========================
-    def run_text_mode(self):
-
-        print("\n💬 Text Mode Started (type 'exit')\n")
+        self.tts.speak("Hello! I'm your AI assistant. How can I help you?")
 
         while True:
-
-            text = input("You: ")
-
-            if text.lower() == "exit":
+            try:
+                keep_running = self.listen_and_respond()
+                if not keep_running:
+                    break
+            except KeyboardInterrupt:
+                print("\n\nStopped by user.")
+                self.tts.speak("Goodbye!")
                 break
+            except Exception as e:
+                logger.error(f"Pipeline error: {e}")
+                self.tts.speak("Something went wrong. Please try again.")
 
-            self.process(text)
 
+# ══════════════════════════════════════════════════════════════
+# ENTRY POINT
+# ══════════════════════════════════════════════════════════════
 
-# =========================
-# MAIN ENTRY
-# =========================
 if __name__ == "__main__":
+    mode = sys.argv[1] if len(sys.argv) > 1 else "voice"
 
     assistant = AIAssistant()
 
-    print("""
-=============================
-🤖 AI ASSISTANT MODES
-=============================
-1. Voice Mode
-2. Text Mode
-=============================
-""")
+    # ── Voice Mode (default) ──────────────────────────────────
+    if mode == "voice":
+        assistant.run()
 
-    mode = input("Select mode (1/2): ")
+    # ── Text Mode (type instead of speak — good for testing) ──
+    elif mode == "text":
+        print("\n" + "="*55)
+        print("  AI ASSISTANT — TEXT MODE")
+        print("  Type 'exit' to quit")
+        print("="*55 + "\n")
 
-    if mode == "1":
-        assistant.run_voice_mode()
+        while True:
+            try:
+                user_input = input("You: ").strip()
+                if not user_input:
+                    continue
+                if user_input.lower() in AIAssistant.STOP_PHRASES:
+                    print("AI : Goodbye!")
+                    break
+                speech_text = assistant.process(user_input)
+                print(f"AI : {speech_text}\n")
+            except KeyboardInterrupt:
+                print("\nGoodbye!")
+                break
+
     else:
-        assistant.run_text_mode()
+        print("Usage:")
+        print("  python main.py          → voice mode (mic input)")
+        print("  python main.py voice    → voice mode (mic input)")
+        print("  python main.py text     → text mode  (keyboard input)")

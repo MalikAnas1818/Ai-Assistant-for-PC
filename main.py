@@ -1,465 +1,368 @@
-"""
-🤖 Advanced AI Voice Assistant - Main Controller
-مکمل AI Voice Assistant - مرکزی کنٹرولر
+# main.py
+# AI Assistant — Main Pipeline
+#
+# Pipeline:
+#   Microphone → speech_to_text → intent_classifier → llm_agent
+#               → response_formatter → action_executor → text_to_speech → Speaker
 
-Features:
-- Speech Recognition (سننا) -> voice.speech_to_text
-- Intent Classification (سمجھنا) -> brain.intent_classifier
-- LLM Agent (سوچنا) -> brain.llm_agent
-- Voice Synthesis (بولنا) -> voice.text_to_speech
-- Action Execution (کام کرنا) -> actions.*
-- Error Handling & Logging
-- Statistics & History
-"""
-
-import os
-import sys
 import logging
-import time
-import json
-from typing import Dict, List, Optional, Callable, Any
-from enum import Enum
-from dataclasses import dataclass, asdict
-from datetime import datetime
-from collections import deque
+import sys
 
-# =====================================================================
-# PIPELINE IMPORTS (Mapping to your specified folder structure)
-# =====================================================================
-try:
-    # Voice Modules
-    from voice.speech_to_text import AdvancedSpeechRecognizer, Language, RecognitionConfig
-    from voice.text_to_speech import AdvancedVoiceSynthesizer, VoiceConfig
-    
-    # Brain Modules
-    from brain.intent_classifier import AdvancedIntentClassifier, IntentType
-    from brain.llm_agent import AdvancedLLMAgent, ModelType
-    
-    # Actions Modules (Imported contextually or directly if structured)
-    # individual actions can also be grouped inside actions/ mapping
-    IMPORTS_AVAILABLE = True
-except ImportError as e:
-    logging.warning(f"⚠️ Pipeline imports not fully available yet: {e}")
-    IMPORTS_AVAILABLE = False
+from voice.speech_to_text import SpeechRecognizer
+from voice.text_to_speech import TextToSpeech, VoiceConfig, Voice
+from brain.intent_classifier import IntentClassifier
+from brain.llm_agent import LLMAgent, Model
+from brain.response_formatter import get_speech_text
+from actions.browser import AdvancedBrowserManager, SearchEngine
+from actions.folder import AdvancedFileManager
+from actions.system import shutdown_pc, restart_pc, lock_pc
+from actions.whatsapp import send_instant_message
 
 
-# =========================
-# LOGGING SETUP
-# =========================
+# ══════════════════════════════════════════════════════════════
+# LOGGING
+# ══════════════════════════════════════════════════════════════
+
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.FileHandler('ai_assistant.log'),
-        logging.StreamHandler()
-    ]
+    format='%(asctime)s | %(levelname)-8s | %(message)s',
+    datefmt='%H:%M:%S'
 )
 logger = logging.getLogger(__name__)
 
 
-# =========================
-# ENUMS & DATA CLASSES
-# =========================
+# ══════════════════════════════════════════════════════════════
+# ACTION EXECUTOR
+# ══════════════════════════════════════════════════════════════
 
-class AssistantState(Enum):
-    """Assistant states"""
-    IDLE = "idle"
-    LISTENING = "listening"
-    PROCESSING = "processing"
-    EXECUTING = "executing"
-    SPEAKING = "speaking"
-    ERROR = "error"
-    SHUTDOWN = "shutdown"
-
-
-@dataclass
-class AssistantConfig:
-    """Assistant configuration"""
-    name: str = "AI Assistant"
-    user_name: str = "Anis"
-    language: str = "ur-PK"
-    voice_rate: str = "-15%"
-    voice_pitch: str = "+0Hz"
-    model: str = "llama-3.1-8b-instant"
-    enable_logging: bool = True
-    enable_callbacks: bool = True
-    max_history: int = 100
-    auto_responses: bool = True
-    debug_mode: bool = False
-
-
-@dataclass
-class CommandExecutionResult:
-    """Result of command execution"""
-    command: str
-    intent: str
-    success: bool
-    response: str
-    execution_time: float
-    timestamp: datetime
-    action_taken: Optional[str] = None
-    details: Dict[str, Any] = None
-
-
-# =========================
-# ADVANCED AI ASSISTANT
-# =========================
-
-class AdvancedAIAssistant:
+class ActionExecutor:
     """
-    Advanced AI Voice Assistant aligned with the custom pipeline directory.
+    Executes actions based on classified intent + parameters.
+    Each method maps to one IntentType.
     """
 
-    def __init__(self, config: AssistantConfig = None):
-        """Initialize the AI Assistant"""
-        self.config = config or AssistantConfig()
-        self.state = AssistantState.IDLE
-        self.is_running = False
+    def __init__(self):
+        self.browser = AdvancedBrowserManager()
+        self.files   = AdvancedFileManager()
 
-        # Initialize pipeline modules placeholder
-        self.speech_recognizer = None
-        self.voice_synthesizer = None
-        self.intent_classifier = None
-        self.llm_agent = None
+    def execute(self, intent: str, params: dict) -> bool:
+        """
+        Route intent to the correct action function.
 
-        # History & statistics
-        self.command_history: deque = deque(maxlen=self.config.max_history)
-        self.execution_results: List[CommandExecutionResult] = []
-        self.callbacks: List[Callable] = []
-        self.start_time = datetime.now()
+        Args:
+            intent: intent string from LLM/classifier (e.g. "open_youtube")
+            params: parameters dict extracted from command
 
-        # Initialize modules from the folders
-        self._initialize_pipeline_modules()
+        Returns:
+            True if action succeeded, False otherwise
+        """
+        handler = self._handlers().get(intent)
 
-        logger.info(f"✅ {self.config.name} initialized for {self.config.user_name}")
-
-    def _initialize_pipeline_modules(self) -> None:
-        """Initialize sub-modules from voice/ and brain/ packages"""
-        if not IMPORTS_AVAILABLE:
-            logger.error("❌ Cannot initialize modules due to missing pipeline files.")
-            return
-
-        try:
-            logger.info("🚀 Loading Pipeline Modules...")
-
-            # 1. Speech Recognition (voice/speech_to_text.py)
+        if handler:
             try:
-                speech_config = RecognitionConfig(language=Language.URDU)
-                self.speech_recognizer = AdvancedSpeechRecognizer(speech_config)
-                logger.info("✅ Speech Recognizer loaded [voice.speech_to_text]")
+                return handler(params)
             except Exception as e:
-                logger.warning(f"⚠️ Speech Recognizer Error: {e}")
-
-            # 2. Voice Synthesis (voice/text_to_speech.py)
-            try:
-                voice_config = VoiceConfig(
-                    voice="ur-PK-UzmaNeural",
-                    rate=self.config.voice_rate,
-                    pitch=self.config.voice_pitch
-                )
-                self.voice_synthesizer = AdvancedVoiceSynthesizer(voice_config)
-                logger.info("✅ Voice Synthesizer loaded [voice.text_to_speech]")
-            except Exception as e:
-                logger.warning(f"⚠️ Voice Synthesizer Error: {e}")
-
-            # 3. Intent Classifier (brain/intent_classifier.py)
-            try:
-                self.intent_classifier = AdvancedIntentClassifier()
-                logger.info("✅ Intent Classifier loaded [brain.intent_classifier]")
-            except Exception as e:
-                logger.warning(f"⚠️ Intent Classifier Error: {e}")
-
-            # 4. LLM Agent (brain/llm_agent.py)
-            try:
-                self.llm_agent = AdvancedLLMAgent(
-                    model=ModelType.LLAMA_3_1_8B,
-                    temperature=0.3
-                )
-                logger.info("✅ LLM Agent loaded [brain.llm_agent]")
-            except Exception as e:
-                logger.warning(f"⚠️ LLM Agent Error: {e}")
-
-            logger.info("✅ Core pipeline modules initialization completed.")
-
-        except Exception as e:
-            logger.error(f"❌ Critical initialization error: {e}")
-
-    # =========================
-    # STATE MANAGEMENT
-    # =========================
-
-    def set_state(self, state: AssistantState) -> None:
-        self.state = state
-        logger.info(f"📊 State: {state.value}")
-        self._trigger_callbacks({"event": "state_change", "state": state.value})
-
-    def get_state(self) -> AssistantState:
-        return self.state
-
-    # =========================
-    # PIPELINE FLOW IMPLEMENTATION
-    # =========================
-
-    def listen(self) -> Optional[str]:
-        """[voice.speech_to_text] Listening phase"""
-        try:
-            self.set_state(AssistantState.LISTENING)
-            if not self.speech_recognizer:
-                logger.error("❌ Speech Recognizer not available")
-                return None
-
-            logger.info("🎤 Listening...")
-            result = self.speech_recognizer.recognize()
-
-            if result:
-                command = result.text
-                logger.info(f"✅ Heard: {command}")
-                self.set_state(AssistantState.IDLE)
-                return command
-            else:
-                logger.warning("⚠️ No speech detected")
-                self.set_state(AssistantState.IDLE)
-                return None
-        except Exception as e:
-            logger.error(f"❌ Listen error: {e}")
-            self.set_state(AssistantState.ERROR)
-            return None
-
-    def classify_intent(self, command: str) -> Dict[str, Any]:
-        """[brain.intent_classifier] Understanding phase"""
-        try:
-            self.set_state(AssistantState.PROCESSING)
-            if not self.intent_classifier:
-                logger.error("❌ Intent Classifier not available")
-                return {"intent": "unknown", "confidence": 0}
-
-            result = self.intent_classifier.classify(command)
-            logger.info(f"🧠 Intent Detected: {result.intent.value} (conf: {result.confidence:.2f})")
-
-            return {
-                "intent": result.intent.value,
-                "confidence": result.confidence,
-                "parameters": result.parameters,
-                "matched_keywords": result.matched_keywords
-            }
-        except Exception as e:
-            logger.error(f"❌ Classification error: {e}")
-            self.set_state(AssistantState.ERROR)
-            return {"intent": "unknown", "confidence": 0}
-
-    def think(self, command: str) -> Dict[str, Any]:
-        """[brain.llm_agent] Thinking fallback phase"""
-        try:
-            if not self.llm_agent:
-                logger.error("❌ LLM Agent not available")
-                return {"reply": "I cannot think right now"}
-
-            logger.info("💭 Thinking...")
-            response = self.llm_agent.ask(command, use_context=True)
-            return response.content
-        except Exception as e:
-            logger.error(f"❌ Think error: {e}")
-            return {"reply": f"Error occurred: {e}"}
-
-    def speak(self, text: str) -> bool:
-        """[voice.text_to_speech] Speaking phase"""
-        try:
-            self.set_state(AssistantState.SPEAKING)
-            if not self.voice_synthesizer:
-                logger.error("❌ Voice Synthesizer not available")
-                self.set_state(AssistantState.IDLE)
+                logger.error(f"Action error [{intent}]: {e}")
                 return False
-
-            logger.info(f"🗣️ Speaking: {text[:50]}...")
-            success = self.voice_synthesizer.speak(text)
-            self.set_state(AssistantState.IDLE)
-            return success
-        except Exception as e:
-            logger.error(f"❌ Speak error: {e}")
-            self.set_state(AssistantState.ERROR)
+        else:
+            logger.warning(f"No handler for intent: {intent}")
             return False
 
-    # =========================
-    # ACTIONS EXECUTION (actions/ folder routing)
-    # =========================
-
-    def execute_action(self, intent: str, parameters: Dict[str, Any]) -> bool:
-        """Routes execution to specialized modules inside actions/ folder"""
-        try:
-            self.set_state(AssistantState.EXECUTING)
-            logger.info(f"⚡ Executing Action: {intent}")
-
-            # WhatsApp Actions [actions/whatsapp.py]
-            if intent == IntentType.SEND_WHATSAPP_MESSAGE.value:
-                from actions.whatsapp import send_whatsapp
-                return send_whatsapp(parameters.get("message", ""))
-
-            # Folder/File Actions [actions/folder.py]
-            elif intent == IntentType.CREATE_FOLDER.value:
-                from actions.folder import create_new_folder
-                return create_new_folder(parameters.get("folder_name", "New Folder"))
-
-            # System Actions [actions/system.py]
-            elif intent in [IntentType.SHUTDOWN_PC.value, IntentType.RESTART_PC.value, IntentType.SLEEP_PC.value]:
-                from actions.system import handle_system_power
-                return handle_system_power(intent)
-
-            # Browser Actions [actions/browser.py]
-            elif intent in [IntentType.OPEN_YOUTUBE.value, IntentType.YOUTUBE_SEARCH.value, IntentType.GOOGLE_SEARCH.value]:
-                from actions.browser import handle_browser_action
-                return handle_browser_action(intent, parameters)
-
-            # Informational local actions
-            elif intent == IntentType.GET_TIME.value:
-                self.speak(f"وقت ہے {datetime.now().strftime('%H:%M')}")
-                return True
-
-            else:
-                logger.warning(f"⚠️ No pipeline action mapped for intent: {intent}")
-                return False
-
-        except Exception as e:
-            logger.error(f"❌ Action Execution error: {e}")
-            self.set_state(AssistantState.ERROR)
-            return False
-        finally:
-            if self.state == AssistantState.EXECUTING:
-                self.set_state(AssistantState.IDLE)
-
-    # =========================
-    # SYSTEM CONTROL & LOGOOP
-    # =========================
-
-    def process_command(self, command: str) -> CommandExecutionResult:
-        start_time = time.time()
-        try:
-            logger.info(f"\n{'='*60}\n📝 Command Input: {command}")
-            
-            intent_data = self.classify_intent(command)
-            intent = intent_data.get("intent", "unknown")
-            confidence = intent_data.get("confidence", 0)
-
-            self.command_history.append({
-                "command": command,
-                "timestamp": datetime.now(),
-                "intent": intent,
-                "confidence": confidence
-            })
-
-            action_taken = None
-            if confidence > 0.6 and intent != "unknown":
-                parameters = intent_data.get("parameters", {})
-                success = self.execute_action(intent, parameters)
-                action_taken = intent if success else None
-            else:
-                logger.info("🔄 Confidence low or unknown intent. Handing over to LLM Agent...")
-                self.speak("جی، مجھے سوچنے دیں")
-                response = self.think(command)
-                reply = response.get("reply", "معذرت، میں سمجھ نہیں پایا")
-                if reply:
-                    self.speak(reply)
-                    action_taken = "llm_response"
-
-            execution_time = time.time() - start_time
-            result = CommandExecutionResult(
-                command=command, intent=intent, success=confidence > 0.5,
-                response=intent_data.get("reply", ""), execution_time=execution_time,
-                timestamp=datetime.now(), action_taken=action_taken, details=intent_data
-            )
-            self.execution_results.append(result)
-            self._trigger_callbacks({"event": "command_executed", "result": asdict(result)})
-            return result
-
-        except Exception as e:
-            logger.error(f"❌ Process loop error: {e}")
-            return CommandExecutionResult(
-                command=command, intent="error", success=False,
-                response=str(e), execution_time=time.time() - start_time, timestamp=datetime.now()
-            )
-
-    def start(self) -> None:
-        """Starts the main assistant loop"""
-        try:
-            self.is_running = True
-            print("\n" + "="*60)
-            logger.info(f"🤖 {self.config.name} Started Successfully")
-            print("="*60 + "\n")
-
-            self.speak(f"اسلام علیکم {self.config.user_name}، میں آپ کا اسسٹنٹ ہوں۔ میں آپ کی کیا مدد کر سکتا ہوں؟")
-
-            while self.is_running:
-                try:
-                    command = self.listen()
-                    if not command:
-                        continue
-
-                    print(f"\n👤 {self.config.user_name}: {command}")
-
-                    if any(word in command.lower() for word in ["exit", "stop", "quit", "خدا حافظ", "بائے"]):
-                        self.speak(f"خدا حافظ {self.config.user_name}۔ آپ کا دن اچھا گزرے!")
-                        break
-
-                    self.process_command(command)
-
-                except KeyboardInterrupt:
-                    break
-                except Exception as e:
-                    logger.error(f"❌ Loop exception: {e}")
-        finally:
-            self.shutdown()
-
-    def shutdown(self) -> None:
-        self.set_state(AssistantState.SHUTDOWN)
-        self.is_running = False
-        self.print_stats()
-        logger.info("✅ System shutdown complete.")
-
-    def add_callback(self, callback: Callable) -> None:
-        self.callbacks.append(callback)
-
-    def _trigger_callbacks(self, data: Dict[str, Any]) -> None:
-        if self.config.enable_callbacks:
-            for callback in self.callbacks:
-                try: callback(data)
-                except: pass
-
-    # Stats modules
-    def get_stats(self) -> Dict[str, Any]:
-        if not self.execution_results: return {"total_commands": 0}
-        successful = sum(1 for r in self.execution_results if r.success)
-        avg_time = sum(r.execution_time for r in self.execution_results) / len(self.execution_results)
+    def _handlers(self) -> dict:
         return {
-            "total_commands": len(self.execution_results),
-            "successful": successful,
-            "success_rate": f"{(successful / len(self.execution_results) * 100):.1f}%",
-            "average_execution_time": f"{avg_time:.2f}s",
-            "uptime": str(datetime.now() - self.start_time)
+            # Web
+            "open_youtube":    self._open_youtube,
+            "youtube_search":  self._youtube_search,
+            "open_chrome":     self._open_chrome,
+            "google_search":   self._google_search,
+            # File System
+            "create_folder":   self._create_folder,
+            "delete_file":     self._delete_file,
+            "open_file":       self._open_file,
+            # System
+            "take_screenshot": self._take_screenshot,
+            "shutdown_pc":     self._shutdown,
+            "restart_pc":      self._restart,
+            "sleep_pc":        self._sleep,
+            # System Info
+            "get_time":        self._get_time,
+            "get_date":        self._get_date,
+            "get_weather":     self._get_weather,
+            # Apps
+            "open_calculator": self._open_calculator,
+            "open_notepad":    self._open_notepad,
+            # Multimedia
+            "play_music":      self._play_music,
+            "play_video":      self._play_video,
+            "pause_media":     self._pause_media,
+            "stop_media":      self._stop_media,
+            # Communication
+            "send_whatsapp":   self._send_whatsapp,
+            "send_email":      self._send_email,
         }
 
-    def print_stats(self) -> None:
-        stats = self.get_stats()
-        print("\n" + "="*60 + "\n📊 ASSISTANT STATISTICS\n" + "="*60)
-        for key, value in stats.items():
-            print(f"{key.replace('_', ' ').title():.<40} {value}")
-        print("="*60 + "\n")
+    # ── Web ───────────────────────────────────────────────────
+
+    def _open_youtube(self, params: dict) -> bool:
+        return self.browser.open_youtube()
+
+    def _youtube_search(self, params: dict) -> bool:
+        query = params.get("query", "")
+        return self.browser.youtube_search(query) if query else self.browser.open_youtube()
+
+    def _open_chrome(self, params: dict) -> bool:
+        return self.browser.open_website("https://google.com")
+
+    def _google_search(self, params: dict) -> bool:
+        query = params.get("query", "")
+        return self.browser.google_search(query) if query else self.browser.open_google()
+
+    # ── File System ───────────────────────────────────────────
+
+    def _create_folder(self, params: dict) -> bool:
+        name   = params.get("folder_name", "New Folder")
+        result = self.files.create_folder(name, drive="C")
+        return result is not None
+
+    def _delete_file(self, params: dict) -> bool:
+        path = params.get("file_name", "")
+        if not path:
+            logger.warning("delete_file: no file_name provided")
+            return False
+        return self.files.delete_file(path)
+
+    def _open_file(self, params: dict) -> bool:
+        import subprocess
+        path = params.get("file_name", "")
+        if not path:
+            logger.warning("open_file: no file_name provided")
+            return False
+        try:
+            subprocess.Popen(["start", path], shell=True)
+            return True
+        except Exception as e:
+            logger.error(f"open_file error: {e}")
+            return False
+
+    # ── System ────────────────────────────────────────────────
+
+    def _take_screenshot(self, params: dict) -> bool:
+        try:
+            import pyautogui
+            from datetime import datetime
+            filename = f"screenshot_{datetime.now().strftime('%Y%m%d_%H%M%S')}.png"
+            pyautogui.screenshot(filename)
+            logger.info(f"Screenshot saved: {filename}")
+            return True
+        except Exception as e:
+            logger.error(f"Screenshot error: {e}")
+            return False
+
+    def _shutdown(self, params: dict) -> bool:
+        shutdown_pc()
+        return True
+
+    def _restart(self, params: dict) -> bool:
+        restart_pc()
+        return True
+
+    def _sleep(self, params: dict) -> bool:
+        import os
+        os.system("rundll32.exe powrprof.dll,SetSuspendState 0,1,0")
+        return True
+
+    # ── System Info ───────────────────────────────────────────
+
+    def _get_time(self, params: dict) -> bool:
+        from datetime import datetime
+        now = datetime.now().strftime("%I:%M %p")
+        logger.info(f"Current time: {now}")
+        return True
+
+    def _get_date(self, params: dict) -> bool:
+        from datetime import datetime
+        today = datetime.now().strftime("%A, %B %d, %Y")
+        logger.info(f"Today's date: {today}")
+        return True
+
+    def _get_weather(self, params: dict) -> bool:
+        location = params.get("location", "current")
+        return self.browser.google_search(f"weather {location}")
+
+    # ── Apps ──────────────────────────────────────────────────
+
+    def _open_calculator(self, params: dict) -> bool:
+        import os
+        os.system("calc")
+        return True
+
+    def _open_notepad(self, params: dict) -> bool:
+        import os
+        os.system("notepad")
+        return True
+
+    # ── Multimedia ────────────────────────────────────────────
+
+    def _play_music(self, params: dict) -> bool:
+        query = params.get("query", "")
+        search = query + " music" if query else "music"
+        return self.browser.youtube_search(search)
+
+    def _play_video(self, params: dict) -> bool:
+        query = params.get("query", "")
+        return self.browser.youtube_search(query) if query else self.browser.open_youtube()
+
+    def _pause_media(self, params: dict) -> bool:
+        try:
+            import pyautogui
+            pyautogui.press("space")
+            return True
+        except Exception as e:
+            logger.error(f"pause_media error: {e}")
+            return False
+
+    def _stop_media(self, params: dict) -> bool:
+        return self._pause_media(params)
+
+    # ── Communication ─────────────────────────────────────────
+
+    def _send_whatsapp(self, params: dict) -> bool:
+        contact = params.get("contact", "")
+        message = params.get("message", "")
+        if not contact or not message:
+            logger.warning("send_whatsapp: missing contact or message")
+            return False
+        return send_instant_message(contact, message)
+
+    def _send_email(self, params: dict) -> bool:
+        return self.browser.open_website("https://mail.google.com/#compose")
 
 
-# =========================
-# MAIN ENTRY POINT
-# =========================
-def main():
-    config = AssistantConfig(
-        name="NovaMind",
-        user_name="Anis",
-        language="ur-PK"
-    )
-    assistant = AdvancedAIAssistant(config)
-    assistant.start()
+# ══════════════════════════════════════════════════════════════
+# ASSISTANT
+# ══════════════════════════════════════════════════════════════
+
+class AIAssistant:
+    """
+    Full pipeline:
+    Voice In → LLM Brain → Action Executor → Voice Out
+    """
+
+    STOP_PHRASES = {"stop", "exit", "quit", "goodbye", "bye"}
+
+    def __init__(self):
+        logger.info("Initializing AI Assistant...")
+
+        self.stt      = SpeechRecognizer(whisper_model="base")
+        self.tts      = TextToSpeech(VoiceConfig(voice=Voice.FEMALE.value))
+        self.llm      = LLMAgent(model=Model.LLAMA_8B, temperature=0.3)
+        self.executor = ActionExecutor()
+
+        logger.info("AI Assistant ready!")
+
+    # ── Single Turn ───────────────────────────────────────────
+
+    def process(self, user_input: str) -> str:
+        """
+        Run one full pipeline cycle.
+        Returns the assistant's speech text.
+        """
+        logger.info(f"User: {user_input}")
+
+        # Step 1 — LLM decision
+        ai_response = self.llm.ask(user_input)
+        content     = ai_response.content
+
+        # Step 2 — Execute action if needed
+        if content.get("type") == "action":
+            intent = content.get("intent", "unknown")
+            params = content.get("parameters", {})
+            if intent != "unknown":
+                logger.info(f"Executing: {intent} | params: {params}")
+                self.executor.execute(intent, params)
+
+        # Step 3 — Format for TTS
+        speech_text = get_speech_text(ai_response)
+        logger.info(f"Response: {speech_text}")
+        return speech_text
+
+    # ── Voice Loop ────────────────────────────────────────────
+
+    def listen_and_respond(self) -> bool:
+        """Listen once, process, speak. Returns False to stop."""
+        user_input = self.stt.listen()
+
+        if not user_input:
+            self.tts.speak("I didn't catch that. Please try again.")
+            return True
+
+        print(f"\n  You : {user_input}")
+
+        if user_input.lower().strip() in self.STOP_PHRASES:
+            self.tts.speak("Goodbye! Have a great day.")
+            return False
+
+        speech_text = self.process(user_input)
+        self.tts.speak(speech_text)
+        return True
+
+    def run(self):
+        """Start the continuous voice loop."""
+        print("\n" + "="*55)
+        print("  AI ASSISTANT — VOICE MODE")
+        print(f"  Say one of {self.STOP_PHRASES} to exit")
+        print("="*55 + "\n")
+
+        self.tts.speak("Hello! I'm your AI assistant. How can I help you?")
+
+        while True:
+            try:
+                if not self.listen_and_respond():
+                    break
+            except KeyboardInterrupt:
+                print("\nStopped.")
+                self.tts.speak("Goodbye!")
+                break
+            except Exception as e:
+                logger.error(f"Pipeline error: {e}")
+                self.tts.speak("Something went wrong. Please try again.")
+
+
+# ══════════════════════════════════════════════════════════════
+# ENTRY POINT
+# ══════════════════════════════════════════════════════════════
 
 if __name__ == "__main__":
-    try:
-        main()
-    except KeyboardInterrupt:
-        print("\n⛔ Program stopped.")
-    except Exception as e:
-        logger.error(f"Fatal crash: {e}")
+    mode = sys.argv[1] if len(sys.argv) > 1 else "voice"
+
+    assistant = AIAssistant()
+
+    # Voice mode (default)
+    if mode == "voice":
+        assistant.run()
+
+    # Text mode — type commands instead of speaking (best for testing)
+    elif mode == "text":
+        print("\n" + "="*55)
+        print("  AI ASSISTANT — TEXT MODE")
+        print("  Type 'exit' to quit")
+        print("="*55 + "\n")
+
+        while True:
+            try:
+                user_input = input("You: ").strip()
+                if not user_input:
+                    continue
+                if user_input.lower() in AIAssistant.STOP_PHRASES:
+                    print("AI : Goodbye!")
+                    break
+                speech_text = assistant.process(user_input)
+                print(f"AI : {speech_text}\n")
+            except KeyboardInterrupt:
+                print("\nGoodbye!")
+                break
+
+    else:
+        print("Usage:")
+        print("  python main.py          → voice mode (mic input)")
+        print("  python main.py text     → text mode  (keyboard, for testing)")

@@ -1,0 +1,110 @@
+{
+  "metadata": {
+    "start_time": "2026-06-03T10:04:19.974595",
+    "end_time": "2026-06-03T10:05:11.790472",
+    "model": "llama-3.1-8b-instant",
+    "messages": 20
+  },
+  "conversation": [
+    {
+      "role": "user",
+      "content": "open youtube",
+      "timestamp": "2026-06-03T10:04:21.029959"
+    },
+    {
+      "role": "assistant",
+      "content": "{\n  \"type\": \"action\",\n  \"intent\": \"open_youtube\",\n  \"parameters\": {},\n  \"confidence\": 1.0,\n  \"reasoning\": \"Recognized the command to open YouTube\"\n}",
+      "timestamp": "2026-06-03T10:04:21.029959"
+    },
+    {
+      "role": "user",
+      "content": "search on youtube python tutorial",
+      "timestamp": "2026-06-03T10:04:22.233635"
+    },
+    {
+      "role": "assistant",
+      "content": "{\n  \"type\": \"action\",\n  \"intent\": \"youtube_search\",\n  \"parameters\": {\n    \"query\": \"python tutorial\"\n  },\n  \"confidence\": 0.95,\n  \"reasoning\": \"Recognized the command to search for Python tutorial on YouTube\"\n}",
+      "timestamp": "2026-06-03T10:04:22.233635"
+    },
+    {
+      "role": "user",
+      "content": "open chrome",
+      "timestamp": "2026-06-03T10:04:22.854036"
+    },
+    {
+      "role": "assistant",
+      "content": "{\n  \"type\": \"action\",\n  \"intent\": \"open_chrome\",\n  \"parameters\": {},\n  \"confidence\": 1.0,\n  \"reasoning\": \"Recognized the command to open Google Chrome\"\n}",
+      "timestamp": "2026-06-03T10:04:22.854036"
+    },
+    {
+      "role": "user",
+      "content": "shut down my computer",
+      "timestamp": "2026-06-03T10:04:23.632366"
+    },
+    {
+      "role": "assistant",
+      "content": "{\n  \"type\": \"action\",\n  \"intent\": \"shutdown_pc\",\n  \"parameters\": {},\n  \"confidence\": 0.95,\n  \"reasoning\": \"Recognized the command to shut down the computer\"\n}",
+      "timestamp": "2026-06-03T10:04:23.632366"
+    },
+    {
+      "role": "user",
+      "content": "what time is it?",
+      "timestamp": "2026-06-03T10:04:33.271784"
+    },
+    {
+      "role": "assistant",
+      "content": "{\n  \"type\": \"action\",\n  \"intent\": \"get_time\",\n  \"parameters\": {},\n  \"confidence\": 1.0,\n  \"reasoning\": \"Recognized the command to get the current time\"\n}",
+      "timestamp": "2026-06-03T10:04:33.271784"
+    },
+    {
+      "role": "user",
+      "content": "what's the weather in London?",
+      "timestamp": "2026-06-03T10:04:34.093194"
+    },
+    {
+      "role": "assistant",
+      "content": "{\n  \"type\": \"action\",\n  \"intent\": \"get_weather\",\n  \"parameters\": {\n    \"location\": \"London\"\n  },\n  \"confidence\": 0.95,\n  \"reasoning\": \"Recognized the command to get the weather in London\"\n}",
+      "timestamp": "2026-06-03T10:04:34.093194"
+    },
+    {
+      "role": "user",
+      "content": "play some music",
+      "timestamp": "2026-06-03T10:04:39.857541"
+    },
+    {
+      "role": "assistant",
+      "content": "{\n  \"type\": \"action\",\n  \"intent\": \"play_music\",\n  \"parameters\": {},\n  \"confidence\": 0.9,\n  \"reasoning\": \"Recognized the command to play music, but unable to determine specific music to play\"\n}",
+      "timestamp": "2026-06-03T10:04:39.857541"
+    },
+    {
+      "role": "user",
+      "content": "hello, how are you?",
+      "timestamp": "2026-06-03T10:04:49.492489"
+    },
+    {
+      "role": "assistant",
+      "content": "{\n  \"type\": \"chat\",\n  \"reply\": \"Hello! I'm functioning properly, thank you for asking. How can I assist you today?\",\n  \"tone\": \"friendly\"\n}",
+      "timestamp": "2026-06-03T10:04:49.492489"
+    },
+    {
+      "role": "user",
+      "content": "create a folder called my projects",
+      "timestamp": "2026-06-03T10:04:59.550197"
+    },
+    {
+      "role": "assistant",
+      "content": "{\n  \"type\": \"action\",\n  \"intent\": \"create_folder\",\n  \"parameters\": {\n    \"folder_name\": \"my projects\"\n  },\n  \"confidence\": 1.0,\n  \"reasoning\": \"Recognized the command to create a new folder with the specified name\"\n}",
+      "timestamp": "2026-06-03T10:04:59.550197"
+    },
+    {
+      "role": "user",
+      "content": "send a whatsapp message to John saying I'll be late",
+      "timestamp": "2026-06-03T10:05:11.484733"
+    },
+    {
+      "role": "assistant",
+      "content": "{\n  \"type\": \"action\",\n  \"intent\": \"send_whatsapp\",\n  \"parameters\": {\n    \"message\": \"I'll be late\",\n    \"recipient\": \"John\"\n  },\n  \"confidence\": 0.95,\n  \"reasoning\": \"Recognized the command to send a WhatsApp message to John with the specified message\"\n}",
+      "timestamp": "2026-06-03T10:05:11.484733"
+    }
+  ]
+}

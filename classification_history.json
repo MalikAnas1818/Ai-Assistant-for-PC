@@ -2,88 +2,104 @@
   {
     "intent": "open_youtube",
     "confidence": "0.95",
-    "command": "youtube kholo",
+    "command": "open youtube",
     "parameters": {},
-    "timestamp": "14:00:25"
+    "time": "10:00:59"
   },
   {
     "intent": "youtube_search",
     "confidence": "0.80",
-    "command": "youtube pe python tutorial search karo",
+    "command": "search on youtube python tutorial",
     "parameters": {
-      "query": "python tutorial search karo"
+      "query": "python tutorial"
     },
-    "timestamp": "14:00:25"
+    "time": "10:00:59"
   },
   {
     "intent": "open_chrome",
     "confidence": "0.95",
     "command": "open chrome",
     "parameters": {},
-    "timestamp": "14:00:25"
+    "time": "10:00:59"
   },
   {
     "intent": "google_search",
     "confidence": "0.80",
-    "command": "google search karo machine learning ke bare mein",
+    "command": "search google for machine learning",
     "parameters": {
-      "query": "karo machine learning ke bare mein"
+      "query": "for machine learning"
     },
-    "timestamp": "14:00:26"
+    "time": "10:00:59"
   },
   {
     "intent": "create_folder",
     "confidence": "0.80",
-    "command": "folder banao project files",
+    "command": "create folder project files",
     "parameters": {
       "folder_name": "project files"
     },
-    "timestamp": "14:00:26"
+    "time": "10:00:59"
   },
   {
     "intent": "take_screenshot",
     "confidence": "1.00",
-    "command": "screenshot lo",
+    "command": "take screenshot",
     "parameters": {},
-    "timestamp": "14:00:26"
+    "time": "10:01:00"
   },
   {
     "intent": "shutdown_pc",
     "confidence": "1.00",
-    "command": "pc band karo",
+    "command": "shut down",
     "parameters": {},
-    "timestamp": "14:00:27"
+    "time": "10:01:00"
   },
   {
     "intent": "get_time",
     "confidence": "1.00",
-    "command": "time kya hua hai",
+    "command": "what time is it",
     "parameters": {},
-    "timestamp": "14:00:27"
+    "time": "10:01:00"
+  },
+  {
+    "intent": "get_weather",
+    "confidence": "0.80",
+    "command": "what's the weather in London",
+    "parameters": {
+      "location": "in london"
+    },
+    "time": "10:01:00"
   },
   {
     "intent": "play_music",
     "confidence": "0.80",
-    "command": "music chalao",
+    "command": "play some music",
     "parameters": {
       "query": ""
     },
-    "timestamp": "14:00:27"
+    "time": "10:01:00"
+  },
+  {
+    "intent": "pause_media",
+    "confidence": "0.95",
+    "command": "pause",
+    "parameters": {},
+    "time": "10:01:00"
+  },
+  {
+    "intent": "send_whatsapp",
+    "confidence": "0.80",
+    "command": "send whatsapp hey how are you",
+    "parameters": {
+      "message": "hey how are you"
+    },
+    "time": "10:01:00"
   },
   {
     "intent": "unknown",
     "confidence": "0.00",
-    "command": "unknown command",
+    "command": "unknown gibberish command xyz",
     "parameters": {},
-    "timestamp": "14:00:28"
-  },
-  {
-    "intent": "send_whatsapp_message",
-    "confidence": "0.80",
-    "command": "whatsapp message bhejo hello",
-    "parameters": {
-      "message": "bhejo hello"
-    },
-    "timestamp": "14:00:28"
+    "time": "10:01:00"
   }
 ]

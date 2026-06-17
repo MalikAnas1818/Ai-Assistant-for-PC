@@ -82,5 +82,334 @@
     "voice": "ur-PK-UzmaNeural",
     "engine": "edge_tts",
     "success": true
+  },
+  {
+    "timestamp": "2026-06-03T09:43:14.838070",
+    "text": "کیا آپ کو کچھ مشکل ہے؟",
+    "voice": "ur-PK-UzmaNeural",
+    "engine": "edge_tts",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-03T09:43:31.652114",
+    "text": "کیا آپ کہنا چاہتے تھے؟ سوڑ کا مطلب کیا ہے؟",
+    "voice": "ur-PK-UzmaNeural",
+    "engine": "edge_tts",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-03T09:43:48.430088",
+    "text": "یہ کیا ہے؟ قرآن پر ایسٹر آف پاکیز کا مطلب کیا ہے؟",
+    "voice": "ur-PK-UzmaNeural",
+    "engine": "edge_tts",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-03T09:44:03.051318",
+    "text": "Kuch error ho gaya hai",
+    "voice": "ur-PK-UzmaNeural",
+    "engine": "edge_tts",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-03T09:44:20.171975",
+    "text": "اللہ تعالی کا نام مبارک ہے آپ کو کچھ مشکل ہے یا آپ صرف دعا کر رہے ہیں؟",
+    "voice": "ur-PK-UzmaNeural",
+    "engine": "edge_tts",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-03T09:56:19.619948",
+    "text": "Hello! I am your AI assistant. How can I help you today?",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-03T09:56:26.202501",
+    "text": "This is the male voice. Sounds different, right?",
+    "voice": "en-US-GuyNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-03T09:56:32.137692",
+    "text": "This sentence is spoken at a slower pace.",
+    "voice": "en-US-GuyNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-03T09:56:55.075631",
+    "text": "This is a longer piece of text to test the chunking system. The system will automatically split this into smaller parts. Each part is converted to audio separately, then played back seamlessly. This allows the system to handle very long responses without any issues.",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-03T09:57:01.957144",
+    "text": "Hello! I am your AI assistant. How can I help you today?",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-03T10:13:13.293958",
+    "text": "Hello! Im your AI assistant. How can I help you?",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-03T10:13:29.734599",
+    "text": "Im not sure how to handle that.",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-03T10:13:44.690754",
+    "text": "What do you mean by want?",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-03T10:13:59.536773",
+    "text": "Im not sure how to handle that.",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-03T10:14:58.701661",
+    "text": "Goodbye!",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-03T10:19:59.633699",
+    "text": "Hello! Im your AI assistant. How can I help you?",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-03T10:20:19.152911",
+    "text": "Creating folder Muhammad.",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-03T10:20:37.917288",
+    "text": "Im not sure how to handle that.",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-03T10:21:07.816943",
+    "text": "Searching YouTube for Python Lectures.",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-03T10:21:31.771391",
+    "text": "Searching YouTube for Karan Kojila.",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-03T10:21:54.420248",
+    "text": "Playing music.",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-03T10:22:20.362419",
+    "text": "You want to know about the Grand Prime Minister of Pakistan",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-03T10:22:41.187086",
+    "text": "Executing your command.",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-03T10:23:04.568399",
+    "text": "Searching Google for Grand Prime Minister of Pakistan.",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-03T10:23:16.459946",
+    "text": "Executing your command.",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-03T10:23:56.402557",
+    "text": "Im a large language model, I dont have personal experiences or physical interactions. I exist solely as a digital entity, and my work is processing and responding to text-based inputs. I dont have a physical farm or any pre-farm activities.",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-03T10:24:16.833977",
+    "text": "Creating folder aunts.",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-03T10:24:57.434051",
+    "text": "I didnt catch that. Please try again.",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-03T10:25:33.010680",
+    "text": "Searching Google for profile image.",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-03T10:26:00.204538",
+    "text": "Executing your command.",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-03T10:26:28.169889",
+    "text": "Executing a command means carrying out a specific instruction or action, usually in a computer or programming context. It involves running a program, script, or function to perform a particular task or set of tasks.",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-03T10:26:46.170716",
+    "text": "Sending WhatsApp message.",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-03T10:27:00.000058",
+    "text": "Executing your command.",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-03T10:27:18.998091",
+    "text": "Ill stop responding.",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-03T10:27:34.850837",
+    "text": "Goodbye! Have a great day.",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-17T20:46:37.159436",
+    "text": "Hello! I am your AI assistant. How can I help you today?",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-17T20:46:42.334518",
+    "text": "This is the male voice. Sounds different, right?",
+    "voice": "en-US-GuyNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-17T20:46:46.976630",
+    "text": "This sentence is spoken at a slower pace.",
+    "voice": "en-US-GuyNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-17T20:47:07.218313",
+    "text": "This is a longer piece of text to test the chunking system. The system will automatically split this into smaller parts. Each part is converted to audio separately, then played back seamlessly. This allows the system to handle very long responses without any issues.",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-17T20:47:14.086058",
+    "text": "Hello! I am your AI assistant. How can I help you today?",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-17T20:48:58.727072",
+    "text": "Hello! Im your AI assistant. How can I help you?",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-17T20:49:22.619066",
+    "text": "Id be happy to chat with you. Hows your day going so far?",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-17T20:49:54.551458",
+    "text": "Im an advanced AI desktop assistant. Im here to help you with tasks, answer questions, and provide information. I can perform actions like opening apps, searching the web, and managing your files. Im constantly learning and improving to better assist you.",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-17T20:50:13.987660",
+    "text": "Creating folder anis.",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-17T20:50:33.568229",
+    "text": "Searching YouTube for Python Lecture.",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-17T20:50:48.253763",
+    "text": "Im not sure how to handle that.",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-17T20:51:11.776842",
+    "text": "What do you mean by click the second last code with Harry?",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-17T20:51:41.498992",
+    "text": "Youre trying to show or highlight the second last video with Harry on YouTube, but Im still unsure about the intent behind it. Could you please clarify or provide more context?",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-17T20:52:00.777342",
+    "text": "Opening YouTube.",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-17T20:52:33.464286",
+    "text": "Im a text-based AI assistant, so I dont have the ability to hear you in the classical sense. However, I can understand and respond to text-based input. You can type your questions or requests, and Ill do my best to help.",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-17T20:52:53.288476",
+    "text": "What is your name?",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-17T20:53:15.921008",
+    "text": "Im glad you mentioned your name, but I didnt quite catch it. Could you please repeat your name so I can remember it?",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-17T20:54:10.728092",
+    "text": "Nice to meet you, Anise! Its great to hear about your background and current work. A. A. System sounds like an interesting project. And wow, your computer is a self-deployer project? Thats impressive! Im a part of this system, so Im glad to be working alongside you.",
+    "voice": "en-US-AriaNeural",
+    "success": true
+  },
+  {
+    "timestamp": "2026-06-17T20:54:16.012687",
+    "text": "Goodbye!",
+    "voice": "en-US-AriaNeural",
+    "success": true
   }
 ]

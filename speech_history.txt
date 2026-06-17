@@ -3,3 +3,50 @@
 [2026-05-21T17:29:37.009580] Hello. I am your advanced AI assistant.
 [2026-05-21T17:29:43.724524] یہ ایک بہت لمبا ٹیکسٹ ہے جسے سسٹم مختلف حصوں میں تقسیم کرے گا پھر ہر حصے کو الگ الگ آواز میں تبدیل کرے گا اس طرح بڑے ریسپانس بھی آسانی سے سنائے جا سکتے ہیں
 [2026-05-21T17:29:50.643978] یہ سلو اور ہائی پچ آواز ہے
+[2026-05-21T17:38:18.240757] AIResponse(response_typeResponseType. ACTION: action, contenttype: action, intent: open_file, parameters: file_name: لیکھ, confidence: 0. 95, reasoning: آپ نے لیکھ کہنے کے بعد، میں نے اندازہ لگایا کہ آپ کو ایک فائل کھولنا ہے, raw_responsen type: action, n intent: open_file, n parameters: n file_name: لیکھn , n confidence: 0. 95, n reasoning: آپ نے لیکھ کہنے کے بعد، میں نے اندازہ لگایا کہ آپ کو ایک فائل کھولنا ہےn, timestampdatetime. datetime(2026, 5, 21, 17, 37, 13, 126165), processing_time1. 9087674617767334, model_usedllama-3. 1-8b-instant, tokens_usedprompt: 487, completion: 102, total: 589, confidence1. 0)
+[2026-05-21T18:06:01.504205] میں اچھا ہوں، آپ کس کے ساتھ بات کر رہے ہیں؟
+[2026-05-21T18:06:20.637463] ہاہا، اچھا ہے! آپ کے ساتھ بات کرنا pleasure ہے کیا آپ کچھ باتیں چاہتے ہیں یا آپ صرف چیٹ کرنا چاہتے ہیں؟
+[2026-05-21T18:06:35.529724] کیا آپ قرنٹ وزیری ازم کے بارے میں جانتے ہیں؟
+[2026-05-21T18:06:59.461235] Main aapka command execute kar raha hoon
+[2026-05-21T18:07:23.581268] Main aapka command execute kar raha hoon
+[2026-05-21T18:07:43.263735] Main aapka command execute kar raha hoon
+[2026-06-03T09:43:14.838070] کیا آپ کو کچھ مشکل ہے؟
+[2026-06-03T09:43:31.652114] کیا آپ کہنا چاہتے تھے؟ سوڑ کا مطلب کیا ہے؟
+[2026-06-03T09:43:48.430088] یہ کیا ہے؟ قرآن پر ایسٹر آف پاکیز کا مطلب کیا ہے؟
+[2026-06-03T09:44:03.051318] Kuch error ho gaya hai
+[2026-06-03T09:44:20.171975] اللہ تعالی کا نام مبارک ہے آپ کو کچھ مشکل ہے یا آپ صرف دعا کر رہے ہیں؟
+[2026-06-03T09:56:19.619948] Hello! I am your AI assistant. How can I help you today?
+[2026-06-03T09:56:26.202501] This is the male voice. Sounds different, right?
+[2026-06-03T09:56:32.137692] This sentence is spoken at a slower pace.
+[2026-06-03T09:56:55.075631] This is a longer piece of text to test the chunking system. The system will automatically split this into smaller parts. Each part is converted to audio separately, then played back seamlessly. This allows the system to handle very long responses without any issues.
+[2026-06-03T09:57:01.957144] Hello! I am your AI assistant. How can I help you today?
+[2026-06-03T10:13:13.293958] Hello! Im your AI assistant. How can I help you?
+[2026-06-03T10:13:29.734599] Im not sure how to handle that.
+[2026-06-03T10:13:44.690754] What do you mean by want?
+[2026-06-03T10:13:59.536773] Im not sure how to handle that.
+[2026-06-03T10:14:58.701661] Goodbye!
+[2026-06-03T10:19:59.633699] Hello! Im your AI assistant. How can I help you?
+[2026-06-03T10:20:19.152911] Creating folder Muhammad.
+[2026-06-03T10:20:37.917288] Im not sure how to handle that.
+[2026-06-03T10:21:07.816943] Searching YouTube for Python Lectures.
+[2026-06-03T10:21:31.771391] Searching YouTube for Karan Kojila.
+[2026-06-03T10:21:54.420248] Playing music.
+[2026-06-03T10:22:20.362419] You want to know about the Grand Prime Minister of Pakistan
+[2026-06-03T10:22:41.187086] Executing your command.
+[2026-06-03T10:23:04.568399] Searching Google for Grand Prime Minister of Pakistan.
+[2026-06-03T10:23:16.459946] Executing your command.
+[2026-06-03T10:23:56.402557] Im a large language model, I dont have personal experiences or physical interactions. I exist solely as a digital entity, and my work is processing and responding to text-based inputs. I dont have a physical farm or any pre-farm activities.
+[2026-06-03T10:24:16.833977] Creating folder aunts.
+[2026-06-03T10:24:57.434051] I didnt catch that. Please try again.
+[2026-06-03T10:25:33.010680] Searching Google for profile image.
+[2026-06-03T10:26:00.204538] Executing your command.
+[2026-06-03T10:26:28.169889] Executing a command means carrying out a specific instruction or action, usually in a computer or programming context. It involves running a program, script, or function to perform a particular task or set of tasks.
+[2026-06-03T10:26:46.170716] Sending WhatsApp message.
+[2026-06-03T10:27:00.000058] Executing your command.
+[2026-06-03T10:27:18.998091] Ill stop responding.
+[2026-06-03T10:27:34.850837] Goodbye! Have a great day.
+[2026-06-17T20:46:37.159436] Hello! I am your AI assistant. How can I help you today?
+[2026-06-17T20:46:42.334518] This is the male voice. Sounds different, right?
+[2026-06-17T20:46:46.976630] This sentence is spoken at a slower pace.
+[2026-06-17T20:47:07.218313] This is a longer piece of text to test the chunking system. The system will automatically split this into smaller parts. Each part is converted to audio separately, then played back seamlessly. This allows the system to handle very long responses without any issues.
+[2026-06-17T20:47:14.086058] Hello! I am your AI assistant. How can I help you today?
